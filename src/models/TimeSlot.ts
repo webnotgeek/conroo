@@ -3,7 +3,7 @@ export interface Capacity {
   max_capacity: number;
 }
 
-export interface Timeslot {
+export interface TimeSlot {
   id: number;
   start_time: string;
   end_time: string;

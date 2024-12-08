@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
-import { Timeslot, UpdatedTimeSlot } from "@/models/TimeSlot";
+import { TimeSlot, UpdatedTimeSlot } from "@/models/TimeSlot";
 
 export const useTimeslotStore = defineStore("timeSlot", {
-  state: (): { timeslots: Timeslot[] } => ({
+  state: (): { timeslots: TimeSlot[] } => ({
     timeslots: [],
   }),
   actions: {
-    setTimeSlots(timeslots: Timeslot[]) {
+    setTimeSlots(timeslots: TimeSlot[]) {
       this.timeslots = timeslots;
     },
     updateTimeSlot(newTimeslot: UpdatedTimeSlot) {

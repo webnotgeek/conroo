@@ -14,13 +14,13 @@
 
 <script lang="ts">
 import { defineComponent, ref, PropType } from "vue";
-import { Timeslot } from "@/models/TimeSlot";
+import { TimeSlot } from "@/models/TimeSlot";
 
 export default defineComponent({
   name: "TimeSlotComponent",
   props: {
     timeslot: {
-      type: Object as PropType<Timeslot>,
+      type: Object as PropType<TimeSlot>,
       required: true,
     },
   },

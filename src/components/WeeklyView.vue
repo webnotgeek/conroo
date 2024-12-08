@@ -67,14 +67,14 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import TimeSlotComponent from "@/components/TimeSlotComponent.vue";
-import { Timeslot } from "@/models/TimeSlot";
+import { TimeSlot } from "@/models/TimeSlot";
 
 export default defineComponent({
   name: "WeeklyView",
   components: { TimeSlotComponent },
   props: {
     timeslots: {
-      type: Array as () => Timeslot[],
+      type: Array as () => TimeSlot[],
       required: true,
     },
   },
@@ -98,7 +98,7 @@ export default defineComponent({
       return props.timeslots.filter((slot) => slot.start_time.startsWith(day));
     };
 
-    const calculateSlotStyle = (slot: Timeslot) => {
+    const calculateSlotStyle = (slot: TimeSlot) => {
       const start = new Date(slot.start_time);
       const end = new Date(slot.end_time);
 
