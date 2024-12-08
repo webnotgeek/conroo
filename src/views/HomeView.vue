@@ -1,18 +1,41 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <WeeklyView :timeslots="timeslots || []" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import { defineComponent, onMounted, computed } from "vue";
+import { fetchTimeslots } from "@/services/timeSlotService";
+import { useTimeslotStore } from "@/stores/timeSlotStore";
+import WeeklyView from "@/components/WeeklyView.vue";
+import { initializeSSE } from "@/services/sseService";
 
 export default defineComponent({
   name: "HomeView",
-  components: {
-    HelloWorld,
+  components: { WeeklyView },
+  setup() {
+    const timeslotStore = useTimeslotStore();
+
+    const loadTimeslots = async () => {
+      try {
+        const data = await fetchTimeslots();
+        timeslotStore.setTimeSlots(data);
+      } catch (error) {
+        console.error("Failed to fetch timeslots:", error);
+      }
+    };
+
+    onMounted(() => {
+      initializeSSE();
+      loadTimeslots();
+    });
+
+    const timeslots = computed(() => timeslotStore.timeslots);
+
+    return {
+      timeslots,
+    };
   },
 });
 </script>
