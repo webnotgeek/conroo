@@ -10,8 +10,6 @@ export const initializeSSE = () => {
   eventSource.onmessage = (event) => {
     try {
       const newTimeslot = JSON.parse(event.data);
-      console.log("New timeslot received via SSE:", newTimeslot);
-
       timeslotStore.updateTimeSlot(newTimeslot);
     } catch (error) {
       console.error("Error processing SSE data:", error);
