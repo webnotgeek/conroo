@@ -1,15 +1,24 @@
 <template>
   <div class="flex flex-col w-full h-full">
     <!-- Header: Days of the week -->
-    <div class="flex sticky top-0 z-10 border-b border-gray-300 bg-gray-100">
+    <div class="flex sticky top-0 z-50 border-b border-gray-300 bg-gray-100">
       <div class="w-16"></div>
       <!-- Placeholder for time column -->
       <div
-        v-for="day in days"
+        v-for="day in transformedDays"
         :key="day"
-        class="flex-1 text-center py-2 font-bold"
+        class="flex flex-col gap-2 flex-1 text-center py-2 font-bold"
       >
-        {{ day }}
+        <div>
+          <span>
+            <span class="font-light text-[14px]">{{ day.weekDay }}</span>
+            <br />
+            <span class="bg-green-500 text-white rounded-full px-2 py-1">
+              {{ day.day }}
+            </span>
+          </span>
+        </div>
+        <div>{{ day.month }}</div>
       </div>
     </div>
 
@@ -26,7 +35,9 @@
       </div>
 
       <!-- Time Column -->
-      <div class="flex flex-col w-16 border-r border-gray-100 bg-gray-50 z-10">
+      <div
+        class="flex flex-col relative z-10 w-16 border-r border-gray-100 bg-gray-50"
+      >
         <div
           v-for="time in timeSlots"
           :key="time"
@@ -89,6 +100,14 @@ export default defineComponent({
       "2024-12-06",
     ];
 
+    const transformedDays = days.map((dateStr) => {
+      const date = new Date(dateStr); // Parse the date string
+      const day = String(date.getDate()).padStart(2, "0"); // Get day with leading zero
+      const month = date.toLocaleString("en-US", { month: "short" }); // Get abbreviated month name
+      const weekDay = date.toLocaleString("en-US", { weekday: "short" });
+      return { weekDay, day, month };
+    });
+
     const timeSlots = Array.from({ length: 24 }, (_, i) => {
       const hour = i < 10 ? `0${i}:00` : `${i}:00`;
       return hour;
@@ -117,6 +136,7 @@ export default defineComponent({
     };
 
     return {
+      transformedDays,
       days,
       timeSlots,
       filteredSlots,
